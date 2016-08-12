@@ -1,0 +1,33 @@
+{
+  "name": "j5-4d-goldelox",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "johnny-five": "^0.9.60"
+  },
+  "description": "Johnny-five plugin for 4D systems goldelox display.",
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.1",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "mocha": "^2.5.3"
+  },
+  "scripts": {
+    "compile": "./node_modules/.bin/babel -d lib/ src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thorikawa/j5-4d-goldelox"
+  },
+  "author": "Takahiro Poly Horikawa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thorikawa/j5-4d-goldelox/issues"
+  },
+  "homepage": "https://github.com/thorikawa/j5-4d-goldelox#readme"
+}
