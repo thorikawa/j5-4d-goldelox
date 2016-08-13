@@ -7,8 +7,8 @@ let board = new five.Board({});
 board.on('ready', () => {
 	let display = new Goldelox({
 		pins: {
-			rx: 2,
-			tx: 10
+			rx: 4,
+			tx: 5
 		},
 		repl: false
 	});

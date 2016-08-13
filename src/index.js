@@ -7,6 +7,7 @@ const priv = new Map();
 export default function(five) {
 	let Fn = five.Fn;
 	let Animation = five.Animation;
+	const TIMEOUT = 4000;
 
 	class Goldelox extends Emitter {
 		constructor(opts) {
@@ -50,9 +51,11 @@ export default function(five) {
 					// for emitting events 
 					// TODO
 					// console.log(this.byteRead, bytes, this.callback)
+					// console.log(this.byteRead, bytes, this.callback);
 					let _read = this.byteRead;
 					this.byteRead += bytes.length;
 					this.bytesToRead -= bytes.length;
+					this.timeout = 0;
 
 					if (_read === 0) {
 						if (bytes[0] === 6) {
@@ -135,12 +138,32 @@ export default function(five) {
 			this.byteRead = 0;
 			this.bytesToRead = 1;
 			this.callback = callback;
+			this.timeout = new Date().getTime() + TIMEOUT;
+			setTimeout(() => {
+				let now = new Date().getTime();
+				if (this.timeout > 0 && this.timeout < now) {
+					if (typeof(this.callback) === 'function') {
+						this.callback(new Error('timeout'));
+						this.callback = undefined;
+					}
+				}
+			}, TIMEOUT);
 		}
 
 		getAckResp(callback) {
 			this.byteRead = 0;
 			this.bytesToRead = 3;
 			this.callback = callback;
+			this.timeout = new Date().getTime() + TIMEOUT;
+			setTimeout(() => {
+				let now = new Date().getTime();
+				if (this.timeout > 0 && this.timeout < now) {
+					if (typeof(this.callback) === 'function') {
+						this.callback(new Error('timeout'));
+						this.callback = undefined;
+					}
+				}
+			}, TIMEOUT);
 		}
 	}
 
