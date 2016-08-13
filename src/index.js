@@ -107,7 +107,7 @@ export default function(five) {
 			this.serialWrite(buf);
 		}
 
-		mediaVideo(x, y, callback) {
+		mediaVideo(x = 0, y = 0, callback) {
 			let buf = new Buffer(6);
 			buf[0] = 0xFF;
 			buf[1] = 0xBB;
@@ -119,7 +119,7 @@ export default function(five) {
 			this.serialWrite(buf);
 		}
 
-		mediaImage(x, y, callback) {
+		mediaImage(x = 0, y = 0, callback) {
 			let buf = new Buffer(6);
 			buf[0] = 0xFF;
 			buf[1] = 0xB3;

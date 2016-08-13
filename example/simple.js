@@ -26,7 +26,7 @@ board.on('ready', () => {
 					return;
 				}
 				console.log('mediaVideo');
-				display.mediaVideo(0, 0);
+				display.mediaVideo();
 			});
 		});
 	}, 3000);
