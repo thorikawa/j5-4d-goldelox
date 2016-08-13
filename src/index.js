@@ -11,8 +11,8 @@ export default function(five) {
 	class Goldelox extends Emitter {
 		constructor(opts) {
 			super();
-			if (!(this instanceof ServoController)) {
-				return new ServoController(opts);
+			if (!(this instanceof Goldelox)) {
+				return new Goldelox(opts);
 			}
 
 			// call Board.Compnent's constructor for 'this'
@@ -22,7 +22,7 @@ export default function(five) {
 
 			var state = {
 				portId: opts.portId || this.io.SERIAL_PORT_IDs.DEFAULT,
-				baud: opts.baud || 115200
+				baud: opts.baud || 9600
 			};
 
 			priv.set(this, state);
@@ -43,6 +43,7 @@ export default function(five) {
 			this.io.serialConfig(serialConfig);
 
 			process.nextTick(() => {
+				this.io.serialFlush(state.portId);
 				this.io.serialRead(state.portId, (bytes) => {
 					// read bytes and determine event types to emit
 					// store received things in state object, use

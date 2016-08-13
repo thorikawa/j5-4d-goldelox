@@ -7,18 +7,21 @@ let board = new five.Board({});
 board.on('ready', () => {
 	let display = new Goldelox({
 		pins: {
-			rx: 11,
+			rx: 2,
 			tx: 10
 		},
 		repl: false
 	});
 	setTimeout(() => {
+		console.log('gfxCls');
 		display.gfxCls();
-	}, 1000);
-	setTimeout(() => {
-		display.mediaInit();
-	}, 2000);
-	setTimeout(() => {
-		display.mediaVideo(0, 0);
 	}, 3000);
+	setTimeout(() => {
+		console.log('mediaInit');
+		display.mediaInit();
+	}, 6000);
+	setTimeout(() => {
+		console.log('mediaVideo');
+		display.mediaVideo(0, 0);
+	}, 9000);
 });
