@@ -49,7 +49,22 @@ export default function(five) {
 					// store received things in state object, use
 					// for emitting events 
 					// TODO
-					console.log(bytes);
+					// console.log(this.byteRead, bytes, this.callback)
+					let _read = this.byteRead;
+					this.byteRead += bytes.length;
+					this.bytesToRead -= bytes.length;
+
+					if (_read === 0) {
+						if (bytes[0] === 6) {
+							if (typeof(this.callback) === 'function') {
+								this.callback(null, bytes);
+							}
+						} else {
+							if (typeof(this.callback) === 'function') {
+								this.callback(new Error('error occured:' + bytes));
+							}
+						}
+					}
 				});
 			});
 
@@ -68,6 +83,7 @@ export default function(five) {
 			let buf = new Buffer(2);
 			buf[0] = 0xFF;
 			buf[1] = 0xD7;
+			this.getAck(callback);
 			this.serialWrite(buf);
 		}
 
@@ -75,6 +91,7 @@ export default function(five) {
 			let buf = new Buffer(2);
 			buf[0] = 0xFF;
 			buf[1] = 0xB1;
+			this.getAckResp(callback);
 			this.serialWrite(buf);
 		}
 
@@ -86,6 +103,7 @@ export default function(five) {
 			buf[3] = (hword) & 0xff;
 			buf[4] = (lword >> 8) & 0xff;
 			buf[5] = (lword) & 0xff;
+			this.getAck(callback);
 			this.serialWrite(buf);
 		}
 
@@ -97,6 +115,7 @@ export default function(five) {
 			buf[3] = (x) & 0xff;
 			buf[4] = (y >> 8) & 0xff;
 			buf[5] = (y) & 0xff;
+			this.getAck(callback);
 			this.serialWrite(buf);
 		}
 
@@ -108,7 +127,20 @@ export default function(five) {
 			buf[3] = (x) & 0xff;
 			buf[4] = (y >> 8) & 0xff;
 			buf[5] = (y) & 0xff;
+			this.getAck(callback);
 			this.serialWrite(buf);
+		}
+
+		getAck(callback) {
+			this.byteRead = 0;
+			this.bytesToRead = 1;
+			this.callback = callback;
+		}
+
+		getAckResp(callback) {
+			this.byteRead = 0;
+			this.bytesToRead = 3;
+			this.callback = callback;
 		}
 	}
 

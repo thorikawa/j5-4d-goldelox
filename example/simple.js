@@ -14,14 +14,20 @@ board.on('ready', () => {
 	});
 	setTimeout(() => {
 		console.log('gfxCls');
-		display.gfxCls();
+		display.gfxCls((err) => {
+			if (err) {
+				console.warn(err);
+				return;
+			}
+			console.log('mediaInit');
+			display.mediaInit((err) => {
+				if (err) {
+					console.warn(err);
+					return;
+				}
+				console.log('mediaVideo');
+				display.mediaVideo(0, 0);
+			});
+		});
 	}, 3000);
-	setTimeout(() => {
-		console.log('mediaInit');
-		display.mediaInit();
-	}, 6000);
-	setTimeout(() => {
-		console.log('mediaVideo');
-		display.mediaVideo(0, 0);
-	}, 9000);
 });
